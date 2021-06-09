@@ -31,42 +31,6 @@
   <!--<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet"></script>-->
   <!--<script defer src="./@tensorflow-models/posenet"></script>-->
-  <!--<script defer src="./script.js"></script>-->
-
-  <script type="text/javascript">
-    const player = document.getElementById('video');
-    
-    
-    window.onload = function () {
-      startVideo();
-    }
-
-    posenet.load().then(function(net){
-      return await net.estimateSinglePose(player, 0.5, false, 16)
-    }).then((pose) => {
-      alert('OK')
-    })
-
-    function startVideo() {
-      var constraints = {
-        audio: true,
-        video: {
-          width: player.width,
-          height: player.height
-        }
-      };
-
-      navigator.mediaDevices.getUserMedia(constraints)
-      .then(function(stream) {
-        player.srcObject = stream;
-        player.onloadedmetadata = function(e) {
-          player.play();
-        };
-      })
-      .catch(function(err) {
-        console.log(err.name+": "+err.message);
-      });
-    }
-  </script>
+  <script defer src="./script.js"></script>
 </body>
 </html>
