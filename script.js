@@ -35,10 +35,10 @@ player.addEventListener('play', () => {
   canvas.width = player.width;
   canvas.height = player.height;
   document.body.append(canvas);
-  const ctx = canvas.getContext('2d');
-  ctx.drawImage(player, 0, 0);
   
   setInterval(async () => {
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(player, 0, 0);
     const pose = await net.estimateSinglePose(player, scaleFactor, flipHorizontal, outputStride)
     drawParts(ctx, pose);
 
