@@ -1,6 +1,6 @@
 const player = document.getElementById('video')
 const txt = document.getElementById('text')
-const posenet = require('@tensorflow-models/posenet')
+//const posenet = require('@tensorflow-models/posenet')
 //const modelUrl = './weights'
 var imageScaleFactor = 0.5;
 var outputStride = 16;
