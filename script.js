@@ -1,3 +1,5 @@
+const { stringify } = require("node:querystring");
+
 const player = document.getElementById('video')
 const txt = document.getElementById('text')
 //const modelUrl = './weights'
@@ -39,12 +41,12 @@ player.addEventListener('play', () => {
   setInterval(async () => {
     const ctx = canvas.getContext('2d');
     ctx.drawImage(player, 0, 0);
-    const pose = net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
+    const pose = await net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
     txt.textContent = "pose"//JSON.stringify(pose)
     drawParts(ctx, pose);
 
     //結果の出力
-    console.log(detections);
+    console.log(JSON.stringify(pose));
   }, 100)
   .catch((e) => {
     console.log('setIntervalでエラー：'+e);
