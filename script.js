@@ -5,7 +5,7 @@ var imageScaleFactor = 0.5;
 var outputStride = 16;
 var flipHorizontal = false;
 
-const net = posenet.load().then(txt.textContent = "OK").then(startVideo)
+const net = await posenet.load().then(txt.textContent = "OK").then(startVideo)
 
 /**カメラを用いたビデオストリーミング**/
 function startVideo() {
