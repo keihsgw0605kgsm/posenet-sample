@@ -38,14 +38,16 @@ player.addEventListener('play', () => {
   
   setInterval(async () => {
     const ctx = canvas.getContext('2d');
+    txt.textContent = "getContext"
     ctx.drawImage(player, 0, 0);
+    txt.textContent = "drawImage"
     const pose = await net.estimateSinglePose(player, scaleFactor, flipHorizontal, outputStride)
-    txt.textContent = JSON.stringify(pose)
+    //txt.textContent = JSON.stringify(pose)
     drawParts(ctx, pose);
 
     //結果の出力
     console.log(detections);
-  }, 100)
+  }, 500)
   .catch((e) => {
     console.log('setIntervalでエラー：'+e);
   })
