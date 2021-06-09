@@ -1,13 +1,11 @@
 const player = document.getElementById('video')
+const txt = document.getElementById('text')
 //const modelUrl = './weights'
 var imageScaleFactor = 0.5;
 var outputStride = 16;
 var flipHorizontal = false;
 
-const canvas = document.getElementById("canvas")
-const ctx = canvas.getContext("2d");
-
-const net = posenet.load().then(startVideo)
+const net = posenet.load().then(txt.textContent = "OK").then(startVideo)
 
 /**カメラを用いたビデオストリーミング**/
 function startVideo() {
