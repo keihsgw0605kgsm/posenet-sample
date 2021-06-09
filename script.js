@@ -1,5 +1,3 @@
-const { stringify } = require("node:querystring");
-
 const player = document.getElementById('video')
 const txt = document.getElementById('text')
 //const modelUrl = './weights'
