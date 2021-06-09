@@ -39,7 +39,7 @@ player.addEventListener('play', () => {
   setInterval(async () => {
     const ctx = canvas.getContext('2d');
     ctx.drawImage(player, 0, 0);
-    const pose = await net.estimateSinglePose(player, scaleFactor, flipHorizontal, outputStride)
+    const pose = await net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
     txt.textContent = "pose"//JSON.stringify(pose)
     drawParts(ctx, pose);
 
