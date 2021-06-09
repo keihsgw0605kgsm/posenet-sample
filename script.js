@@ -40,7 +40,7 @@ player.addEventListener('play', () => {
     const ctx = canvas.getContext('2d');
     ctx.drawImage(player, 0, 0);
     const pose = await net.estimateSinglePose(player, scaleFactor, flipHorizontal, outputStride)
-    txt.textContent = JSON.stringify(pose)
+    txt.textContent = "pose"//JSON.stringify(pose)
     drawParts(ctx, pose);
 
     //結果の出力
