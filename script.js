@@ -54,9 +54,9 @@ player.addEventListener('play', () => {
   
   setInterval(async () => {
     //const ctx = canvas.getContext('2d');
-    //ctx.drawImage(player, 0, 0);
-    getPose(player, net).then(txt.textContent = "ttttt").catch((e) => txt.textContent= (e))
-    //const pose = await net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride).catch((e) => {txt.textContent = e})
+    ctx.drawImage(player, 0, 0);
+    //getPose(player, net).then(txt.textContent = "ttttt").catch((e) => txt.textContent= (e))
+    const pose = await net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
     /*net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
     then((pose) => {
       txt.textContent = "pose2"
@@ -67,7 +67,7 @@ player.addEventListener('play', () => {
     //drawParts(ctx, pose);
 
     //結果の出力
-    console.log(JSON.stringify(pose));
+    //console.log(JSON.stringify(pose));
   }, 100)
   .catch((e) => {
     txt.textContent = 'setIntervalでエラー：'+e;
