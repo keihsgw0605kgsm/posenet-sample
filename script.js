@@ -1,4 +1,5 @@
 const player = document.getElementById('video')
+const download = document.getElementById('download')
 //const txt = document.getElementById('text')
 //const txt2 = document.getElementById('text2')
 //const posenet = require('@tensorflow-models/posenet')
@@ -196,5 +197,5 @@ function handleDownload() {
   var blob = new Blob([ pose ], { "type" : "text/plain" });
   var url = window.URL.createObjectURL(blob);
   download.href = url;
-  window.navigator.msSaveBlob(blob, "test.json"); 
+  window.navigator.msSaveBlob(blob, "test_posenet.json"); 
 }
