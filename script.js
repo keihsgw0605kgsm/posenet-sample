@@ -56,10 +56,9 @@ player.addEventListener('play', () => {
   setInterval(async () => {
     const ctx = canvas.getContext('2d');
     ctx.drawImage(player, 0, 0);
-    //getPose(player, net).then(txt.textContent = "ttttt").catch((e) => txt.textContent= (e))
     txt2.textContent = "ttttttt"
+    getPose(player, net).then(txt.textContent = "ttttt").catch((e) => txt.textContent= e)
     //const pose = await net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
-    txt.textContent = JSON.stringify(await net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride))
     /*net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
     then((pose) => {
       txt.textContent = "pose2"
@@ -128,7 +127,7 @@ function drawSkeleton(keypoints) {
 }*/
 
 function getPose(player, net) {
-  net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
+  txt.textContent = net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
 }
 
 function drawParts(ctx, pose) {
