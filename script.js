@@ -7,6 +7,7 @@ const player = document.getElementById('video')
 var imageScaleFactor = 0.5;
 var outputStride = 16;
 var flipHorizontal = false;
+var pose = "No Data";
 
 //const net = posenet.load().then(txt.textContent = "OK").then(startVideo)
 
@@ -67,9 +68,10 @@ player.addEventListener('play', () => {
     .then((net) => {
       return net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
     })
-    .then((pose) => {
-      console.log(JSON.stringify(pose))
-      drawParts(ctx, pose);
+    .then((pose_) => {
+      console.log(JSON.stringify(pose_))
+      drawParts(ctx, pose_);
+      //var pose = pose_
     })
     .catch((e) => {
       consoloe.log(e)
@@ -187,4 +189,11 @@ function drawParts(ctx, pose) {
   ctx.lineTo(points[14].position.x, points[14].position.y);
   ctx.lineTo(points[16].position.x, points[16].position.y);
   ctx.stroke();*/
+}
+
+function handleDownload() {
+  var blob = new Blob([ pose ], { "type" : "text/plain" });
+  var url = window.URL.createObjectURL(blob);
+  download.href = url;
+  window.navigator.msSaveBlob(blob, "test.json"); 
 }
