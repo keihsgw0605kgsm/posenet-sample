@@ -3,8 +3,8 @@
   </head>
   <body>
     <p id="text">test</p><br>
-    <video id="video" width="720" height="560" autoplay muted></video><br>
-    <!--<img id="video" src="./image.png" width="720" height="560"/>-->
+    <!--<video id="video" width="720" height="560" autoplay muted></video><br>-->
+    <img id="video" src="./image.jpg"/>
   </body>
   <!-- Load TensorFlow.js -->
   <script src="https://unpkg.com/@tensorflow/tfjs"></script>
@@ -23,11 +23,16 @@
     }
 
     posenet.load().then(function(net){
-        txt.textContent = JSON.stringify(net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride))
+        //txt.textContent = net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
         return net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
-        }).then(function(pose){
+    })
+    .then(function(pose){
+        //txt.textContent = pose
         txt.textContent = "OK"
-    });
+    })
+    .catch((e) => {
+        txt.textContent = e;
+    })
 
     /**カメラを用いたビデオストリーミング**/
     function startVideo() {
