@@ -61,13 +61,13 @@ player.addEventListener('play', () => {
     const ctx = canvas.getContext('2d');
     ctx.drawImage(player, 0, 0);
     
-    /*posenet.load()
+    posenet.load()
     .then((net) => {
       return await net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
     })
     .then((pose) => {
-      drawParts(ctx, pose);
-    })*/
+      //drawParts(ctx, pose);
+    })
     
     //drawParts(ctx, pose);
 
