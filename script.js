@@ -10,7 +10,7 @@ var flipHorizontal = false;
 
 //const net = posenet.load().then(txt.textContent = "OK").then(startVideo)
 
-window.load = function () {
+window.onload = function () {
   startVideo();
 }
 
