@@ -1,36 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      width: 100vw;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    canvas {
-      position: absolute;
-    }
-  </style>
-</head>
-<body>
-  <p id="text">test</p><br>
-  <video id="video" width="720" height="560" autoplay muted></video><br>
-
-  <!--外部JSファイル読み込み-->
+<html>
+  <head>
+  </head>
+  <body>
+    <p id="text">test</p><br>
+    <video id="video" width="720" height="560" autoplay muted></video><br>
+    <!--<img id="video" src="./image.png" width="720" height="560"/>-->
+  </body>
+  <!-- Load TensorFlow.js -->
   <script src="https://unpkg.com/@tensorflow/tfjs"></script>
+  <!-- Load Posenet -->
   <script src="https://unpkg.com/@tensorflow-models/posenet"></script>
-  <!--<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet"></script>-->
-  <!--<script defer src="./@tensorflow-models/posenet"></script>-->
-  <script defer src="./script.js"></script>
-</body>
+  <script>
+    var imageScaleFactor = 0.2;
+    var outputStride = 16;
+    var flipHorizontal = false;
+
+    var player = document.getElementById('video');
+    var txt = document.getElementById('text')
+
+    window.onload = function () {
+        startVideo();
+    }
+
+    posenet.load().then(function(net){
+        txt.textContent = JSON.stringify(net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride))
+        return net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
+        }).then(function(pose){
+        txt.textContent = "OK"
+    });
+
+    /**カメラを用いたビデオストリーミング**/
+    function startVideo() {
+        var constraints = {
+            audio: true,
+            video: {
+            width: player.width,
+            height: player.height
+            }
+        };
+    
+        navigator.mediaDevices.getUserMedia(constraints)
+        .then(function(stream) {
+            player.srcObject = stream;
+            player.onloadedmetadata = function(e) {
+            player.play();
+            };
+        })
+        .catch(function(err) {
+            console.log(err.name+": "+err.message);
+        });
+    }
+  </script>
 </html>
