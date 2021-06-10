@@ -5,7 +5,7 @@ const player = document.getElementById('video')
 //import * as posenet from '@tensorflow-models/posenet'
 //const modelUrl = './weights'
 var imageScaleFactor = 0.5;
-var outputStride = 16;
+var outputStride = 32;
 var flipHorizontal = false;
 var pose = "No Data";
 
