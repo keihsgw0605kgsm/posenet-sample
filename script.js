@@ -14,7 +14,7 @@ posenet.load()
   return net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
 })
 .then((net) => {
-  txt.textContent = "pose"
+  txt.textContent = JSON.stringify(pose)
 })
 .catch((e) => {
   txt.textContent = e
