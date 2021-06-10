@@ -1,3 +1,5 @@
+const { getHeapCodeStatistics } = require("node:v8");
+
 const player = document.getElementById('video')
 const txt = document.getElementById('text')
 //const posenet = require('@tensorflow-models/posenet')
@@ -46,7 +48,7 @@ function startVideo() {
 }
 
 /**カメラオン時のイベント**/
-player.addEventListener('loadeddata', () => {
+player.addEventListener('play', () => {
   const canvas = document.createElement("canvas");
   canvas.width = player.width;
   canvas.height = player.height;
@@ -55,7 +57,8 @@ player.addEventListener('loadeddata', () => {
   setInterval(async () => {
     const ctx = canvas.getContext('2d');
     ctx.drawImage(player, 0, 0);
-    const pose = await net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride).catch((e) => {txt.textContent = e})
+    getPose(player, net).catch((e) => txt.textContent= (e))
+    //const pose = await net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride).catch((e) => {txt.textContent = e})
     /*net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
     then((pose) => {
       txt.textContent = "pose2"
@@ -122,6 +125,10 @@ function drawSkeleton(keypoints) {
     );
   });
 }*/
+
+function getPose(player, net) {
+  net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
+}
 
 function drawParts(ctx, pose) {
   const points = pose.keypoints;
