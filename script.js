@@ -48,7 +48,7 @@ player.addEventListener('play', () => {
   const canvas = document.createElement("canvas");
   canvas.width = player.width;
   canvas.height = player.height;
-  document.body.append(canvas);
+  //document.body.append(canvas);
   
   setInterval(async () => {
     const ctx = canvas.getContext('2d');
