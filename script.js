@@ -7,8 +7,8 @@ var imageScaleFactor = 0.5;
 var outputStride = 16;
 var flipHorizontal = false;
 
-//const net = posenet.load().then(txt.textContent = "OK").then(startVideo)
-posenet.load()
+const net = posenet.load().then(txt.textContent = "OK").then(startVideo)
+/*posenet.load()
 .then((net) => {
   startVideo();
   return net
@@ -21,7 +21,7 @@ posenet.load()
 })
 .catch((e) => {
   txt.textContent = e
-})
+})*/
 
 /**カメラを用いたビデオストリーミング**/
 function startVideo() {
@@ -46,7 +46,7 @@ function startVideo() {
 }
 
 /**カメラオン時のイベント**/
-player.addEventListener('play', () => {
+player.addEventListener('loadeddata', () => {
   const canvas = document.createElement("canvas");
   canvas.width = player.width;
   canvas.height = player.height;
@@ -55,13 +55,13 @@ player.addEventListener('play', () => {
   setInterval(async () => {
     const ctx = canvas.getContext('2d');
     ctx.drawImage(player, 0, 0);
-    //const pose = await net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride).catch((e) => {txt.textContent = e})
+    const pose = await net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride).catch((e) => {txt.textContent = e})
     /*net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
     then((pose) => {
       txt.textContent = "pose2"
     })
     .catch((e) => {txt.textContent = e})*/
-    //txt.textContent = "pose"//JSON.stringify(pose)
+    txt.textContent = "pose"//JSON.stringify(pose)
     
     //drawParts(ctx, pose);
 
