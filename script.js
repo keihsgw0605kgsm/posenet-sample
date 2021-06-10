@@ -146,7 +146,7 @@ function drawSkeleton(keypoints) {
 }*/
 
 function drawParts(ctx, pose) {
-  //ctx.clearRect();
+  ctx.clearRect(0, 0, ctx.canvas.clientWidth, ctx.canvas.clientHeight);
   const points = pose.keypoints;
   const radius = 7; //円の半径
 
