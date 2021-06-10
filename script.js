@@ -58,7 +58,7 @@ player.addEventListener('play', () => {
   document.body.append(canvas);
   
   setInterval(async () => {
-    const ctx = canvas.getContext('2d');
+    /*const ctx = canvas.getContext('2d');
     ctx.drawImage(player, 0, 0);
     
     posenet.load()
@@ -67,7 +67,7 @@ player.addEventListener('play', () => {
     })
     .then((pose) => {
       drawParts(ctx, pose);
-    })
+    })*/
     
     //drawParts(ctx, pose);
 
