@@ -65,9 +65,9 @@ player.addEventListener('play', () => {
     .then((net) => {
       return await net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
     })
-    .then((pose) => {
+    /*.then((pose) => {
       //drawParts(ctx, pose);
-    })
+    })*/
     
     //drawParts(ctx, pose);
 
