@@ -8,7 +8,13 @@ var imageScaleFactor = 0.5;
 var outputStride = 16;
 var flipHorizontal = false;
 
-const net = posenet.load().then(txt.textContent = "OK").then(startVideo)
+//const net = posenet.load().then(txt.textContent = "OK").then(startVideo)
+
+window.load = function () {
+  startVideo();
+}
+
+
 /*posenet.load()
 .then((net) => {
   startVideo();
@@ -57,14 +63,28 @@ player.addEventListener('play', () => {
     const ctx = canvas.getContext('2d');
     ctx.drawImage(player, 0, 0);
     txt2.textContent = "ttttttt"
-    getPose(player, net).then(txt.textContent = "ttttt").catch((e) => txt.textContent= e)
+    
+    posenet.load()
+    .then((net) => {
+      return net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
+    })
+    .then((pose) => {
+      txt.textContent = JSON.stringify(pose)
+    })
+    .catch((e) => {
+      txt.textContent = e
+    })
+    
+    
+    
+    //getPose(player, net).then(txt.textContent = "ttttt").catch((e) => txt.textContent= e)
     //const pose = await net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
     /*net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
     then((pose) => {
       txt.textContent = "pose2"
     })
     .catch((e) => {txt.textContent = e})*/
-    txt.textContent = "pose"//JSON.stringify(pose)
+    //txt.textContent = "pose"//JSON.stringify(pose)
     
     //drawParts(ctx, pose);
 
