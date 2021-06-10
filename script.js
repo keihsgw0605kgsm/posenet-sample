@@ -69,6 +69,7 @@ player.addEventListener('play', () => {
     })
     .then((pose) => {
       console.log(JSON.stringify(pose))
+      drawParts(ctx, pose);
     })
     .catch((e) => {
       consoloe.log(e)
@@ -82,7 +83,7 @@ player.addEventListener('play', () => {
     .catch((e) => {txt.textContent = e})*/
     //txt.textContent = "pose"//JSON.stringify(pose)
     
-    drawParts(ctx, pose);
+    //drawParts(ctx, pose);
 
     //結果の出力
     //console.log(JSON.stringify(pose));
