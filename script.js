@@ -1,4 +1,6 @@
 const player = document.getElementById('video')
+const txt = document.getElementById('text')
+const txt2 = document.getElementById('text2')
 //const posenet = require('@tensorflow-models/posenet')
 //import * as posenet from '@tensorflow-models/posenet'
 //const modelUrl = './weights'
@@ -63,23 +65,37 @@ player.addEventListener('play', () => {
     
     posenet.load()
     .then((net) => {
-      return await net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
+      return net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
     })
-    /*.then((pose) => {
-      //drawParts(ctx, pose);
-    })*/
+    .then((pose) => {
+      txt.textContent = JSON.stringify(pose)
+    })
+    .catch((e) => {
+      txt.textContent = e
+    })
     
-    //drawParts(ctx, pose);
+    
+    
+    //getPose(player, net).then(txt.textContent = "ttttt").catch((e) => txt.textContent= e)
+    //const pose = await net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
+    /*net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
+    then((pose) => {
+      txt.textContent = "pose2"
+    })
+    .catch((e) => {txt.textContent = e})*/
+    //txt.textContent = "pose"//JSON.stringify(pose)
+    
+    drawParts(ctx, pose);
 
     //結果の出力
     //console.log(JSON.stringify(pose));
   }, 100)
   .catch((e) => {
-    console.log('setIntervalでエラー：'+e);
+    txt.textContent = 'setIntervalでエラー：'+e;
   })
 })
 .catch((e) => {
-  console.log('player.addEventListenerでエラー：'+e);
+  txt.textContent = 'player.addEventListenerでエラー：'+e;
 })
 
 /*function drawPoint(y,x,r) {
@@ -128,6 +144,10 @@ function drawSkeleton(keypoints) {
     );
   });
 }*/
+
+function getPose(player, net) {
+  txt.textContent = net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
+}
 
 function drawParts(ctx, pose) {
   const points = pose.keypoints;
