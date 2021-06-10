@@ -14,8 +14,8 @@ posenet.load().then(function(net){
   return net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
 })
 .then(function(pose){
-  //txt.textContent = pose
-  txt.textContent = "OK"
+  txt.textContent = pose
+  //txt.textContent = "OK"
 })
 .catch((e) => {
   txt.textContent = e;
