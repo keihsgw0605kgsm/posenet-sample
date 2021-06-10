@@ -62,6 +62,7 @@ player.addEventListener('play', () => {
   
   setInterval(async () => {
     const ctx = canvas.getContext('2d');
+    ctx.clearRect();
     //ctx.drawImage(player, 0, 0);
     
     posenet.load()
