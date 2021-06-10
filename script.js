@@ -71,7 +71,7 @@ player.addEventListener('play', () => {
     .then((pose_) => {
       console.log(JSON.stringify(pose_))
       drawParts(ctx, pose_);
-      //var pose = pose_
+      pose = JSON.stringify(pose_, null, '\t');
     })
     .catch((e) => {
       consoloe.log(e)
