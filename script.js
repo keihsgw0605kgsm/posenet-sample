@@ -62,41 +62,26 @@ player.addEventListener('play', () => {
   setInterval(async () => {
     const ctx = canvas.getContext('2d');
     ctx.drawImage(player, 0, 0);
-    txt2.textContent = "ttttttt"
     
     posenet.load()
     .then((net) => {
-      return net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
+      return await net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
     })
     .then((pose) => {
-      txt.textContent = JSON.stringify(pose)
-    })
-    .catch((e) => {
-      txt.textContent = e
+      drawParts(ctx, pose);
     })
     
-    
-    
-    //getPose(player, net).then(txt.textContent = "ttttt").catch((e) => txt.textContent= e)
-    //const pose = await net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
-    /*net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
-    then((pose) => {
-      txt.textContent = "pose2"
-    })
-    .catch((e) => {txt.textContent = e})*/
-    //txt.textContent = "pose"//JSON.stringify(pose)
-    
-    drawParts(ctx, pose);
+    //drawParts(ctx, pose);
 
     //結果の出力
     //console.log(JSON.stringify(pose));
   }, 100)
   .catch((e) => {
-    txt.textContent = 'setIntervalでエラー：'+e;
+    console.log('setIntervalでエラー：'+e);
   })
 })
 .catch((e) => {
-  txt.textContent = 'player.addEventListenerでエラー：'+e;
+  console.log('player.addEventListenerでエラー：'+e);
 })
 
 /*function drawPoint(y,x,r) {
@@ -145,10 +130,6 @@ function drawSkeleton(keypoints) {
     );
   });
 }*/
-
-function getPose(player, net) {
-  txt.textContent = net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
-}
 
 function drawParts(ctx, pose) {
   const points = pose.keypoints;
