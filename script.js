@@ -1,6 +1,4 @@
 const player = document.getElementById('video')
-const txt = document.getElementById('text')
-const txt2 = document.getElementById('text2')
 //const posenet = require('@tensorflow-models/posenet')
 //import * as posenet from '@tensorflow-models/posenet'
 //const modelUrl = './weights'
