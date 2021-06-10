@@ -62,7 +62,6 @@ player.addEventListener('play', () => {
   
   setInterval(async () => {
     const ctx = canvas.getContext('2d');
-    ctx.clearRect();
     //ctx.drawImage(player, 0, 0);
     
     posenet.load()
@@ -147,6 +146,7 @@ function drawSkeleton(keypoints) {
 }*/
 
 function drawParts(ctx, pose) {
+  //ctx.clearRect();
   const points = pose.keypoints;
   const radius = 7; //円の半径
 
