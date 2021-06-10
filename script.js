@@ -58,7 +58,7 @@ player.addEventListener('play', () => {
       txt.textContent = "pose2"
     })
     .catch((e) => {txt.textContent = e})*/
-    txt.textContent = "pose"//JSON.stringify(pose)
+    //txt.textContent = "pose"//JSON.stringify(pose)
     
     //drawParts(ctx, pose);
 
