@@ -1,5 +1,6 @@
 const player = document.getElementById('video')
 const txt = document.getElementById('text')
+const txt2 = document.getElementById('text2')
 //const posenet = require('@tensorflow-models/posenet')
 //import * as posenet from '@tensorflow-models/posenet'
 //const modelUrl = './weights'
@@ -56,6 +57,7 @@ player.addEventListener('play', () => {
     //const ctx = canvas.getContext('2d');
     ctx.drawImage(player, 0, 0);
     //getPose(player, net).then(txt.textContent = "ttttt").catch((e) => txt.textContent= (e))
+    txt2.textContent = "OKOKOKOK"
     const pose = await net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
     /*net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
     then((pose) => {
