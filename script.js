@@ -11,7 +11,7 @@ var flipHorizontal = false;
 posenet.load()
 .then((net) => {
   startVideo();
-  return net
+  return net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
 })
 .then((net) => {
   txt.textContent = "pose"
