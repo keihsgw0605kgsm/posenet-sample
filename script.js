@@ -1,5 +1,3 @@
-const { getHeapCodeStatistics } = require("node:v8");
-
 const player = document.getElementById('video')
 const txt = document.getElementById('text')
 //const posenet = require('@tensorflow-models/posenet')
