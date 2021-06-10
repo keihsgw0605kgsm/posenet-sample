@@ -55,7 +55,7 @@ player.addEventListener('play', () => {
   setInterval(async () => {
     const ctx = canvas.getContext('2d');
     ctx.drawImage(player, 0, 0);
-    getPose(player, net).catch((e) => txt.textContent= (e))
+    getPose(player, net).then(txt.textContent = "ttttt").catch((e) => txt.textContent= (e))
     //const pose = await net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride).catch((e) => {txt.textContent = e})
     /*net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
     then((pose) => {
