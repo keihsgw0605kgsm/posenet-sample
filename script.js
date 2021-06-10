@@ -54,7 +54,7 @@ player.addEventListener('play', () => {
   document.body.append(canvas);
   
   setInterval(async () => {
-    //const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d');
     //ctx.drawImage(player, 0, 0);
     //getPose(player, net).then(txt.textContent = "ttttt").catch((e) => txt.textContent= (e))
     txt2.textContent = "ttttttt"
