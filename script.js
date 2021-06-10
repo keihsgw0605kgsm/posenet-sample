@@ -68,15 +68,12 @@ player.addEventListener('play', () => {
       return net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
     })
     .then((pose) => {
-      txt.textContent = JSON.stringify(pose)
+      console.log(JSON.stringify(pose))
     })
     .catch((e) => {
-      txt.textContent = e
+      consoloe.log(e)
     })
-    
-    
-    
-    //getPose(player, net).then(txt.textContent = "ttttt").catch((e) => txt.textContent= e)
+
     //const pose = await net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
     /*net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
     then((pose) => {
@@ -91,11 +88,11 @@ player.addEventListener('play', () => {
     //console.log(JSON.stringify(pose));
   }, 100)
   .catch((e) => {
-    txt.textContent = 'setIntervalでエラー：'+e;
+    console.log('setIntervalでエラー：'+e);
   })
 })
 .catch((e) => {
-  txt.textContent = 'player.addEventListenerでエラー：'+e;
+  console.log('player.addEventListenerでエラー：'+e);
 })
 
 /*function drawPoint(y,x,r) {
@@ -144,10 +141,6 @@ function drawSkeleton(keypoints) {
     );
   });
 }*/
-
-function getPose(player, net) {
-  txt.textContent = net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
-}
 
 function drawParts(ctx, pose) {
   const points = pose.keypoints;
