@@ -57,7 +57,7 @@ player.addEventListener('play', () => {
     //const ctx = canvas.getContext('2d');
     //ctx.drawImage(player, 0, 0);
     //getPose(player, net).then(txt.textContent = "ttttt").catch((e) => txt.textContent= (e))
-    txt2.textContent = "OKOKOKOK"
+    txt2.textContent = "ttttttt"
     const pose = await net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
     /*net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
     then((pose) => {
