@@ -53,8 +53,8 @@ player.addEventListener('play', () => {
   document.body.append(canvas);
   
   setInterval(async () => {
-    const ctx = canvas.getContext('2d');
-    ctx.drawImage(player, 0, 0);
+    //const ctx = canvas.getContext('2d');
+    //ctx.drawImage(player, 0, 0);
     getPose(player, net).then(txt.textContent = "ttttt").catch((e) => txt.textContent= (e))
     //const pose = await net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride).catch((e) => {txt.textContent = e})
     /*net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
@@ -70,11 +70,11 @@ player.addEventListener('play', () => {
     console.log(JSON.stringify(pose));
   }, 100)
   .catch((e) => {
-    console.log('setIntervalでエラー：'+e);
+    txt.textContent = 'setIntervalでエラー：'+e;
   })
 })
 .catch((e) => {
-  console.log('player.addEventListenerでエラー：'+e);
+  txt.textContent = 'player.addEventListenerでエラー：'+e;
 })
 
 /*function drawPoint(y,x,r) {
