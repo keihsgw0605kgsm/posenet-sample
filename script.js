@@ -8,7 +8,8 @@ const download = document.getElementById('download')
 var imageScaleFactor = 0.5;
 var outputStride = 32;
 var flipHorizontal = false;
-var pose = "No Data";
+var pose_ = "No Data";
+var test_csv = []
 
 //const net = posenet.load().then(txt.textContent = "OK").then(startVideo)
 
@@ -69,10 +70,15 @@ player.addEventListener('play', () => {
     .then((net) => {
       return net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
     })
-    .then((pose_) => {
-      console.log(JSON.stringify(pose_))
-      drawParts(ctx, pose_);
-      pose = JSON.stringify(pose_, null, '\t');
+    .then((pose) => {
+      console.log(JSON.stringify(pose))
+      drawParts(ctx, pose);
+      pose_ = JSON.stringify(pose, null, '\t');
+
+      test_csv = [
+        ['x0', 'y0', 'x1', 'y1'],
+        [pose["keypoints"]["position"][0]["x"], pose["keypoints"]["position"][0]["y"], pose["keypoints"]["position"][1]["x"], pose["keypoints"]["position"][1]["y"]]
+      ]
     })
     .catch((e) => {
       consoloe.log(e)
@@ -193,9 +199,23 @@ function drawParts(ctx, pose) {
   ctx.stroke();*/
 }
 
-function handleDownload() {
-  var blob = new Blob([ pose ], { "type" : "text/plain" });
+/** jsonファイルの保存 **/
+/*function handleDownload() {
+  var blob = new Blob([ pose_ ], { "type" : "text/plain" });
   var url = window.URL.createObjectURL(blob);
   download.href = url;
   window.navigator.msSaveBlob(blob, "test_posenet.json"); 
+}*/
+
+/** csvファイルの保存 **/
+function handleDownload() {
+  
+  let data = test_csv.map((record)=>record.join(',')).join('\r\n');
+  
+  var bom = new Uint8Array([0xEF, 0xBB, 0xBF])
+
+  var blob = new Blob([ bom, data ], { "type" : "text/csv" });
+  let url = (window.URL || window.webkitURL).createObjectURL(blob);
+  download.href = url;
+  window.navigator.msSaveBlob(blob, "test_posenet.csv");
 }
