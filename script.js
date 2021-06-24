@@ -76,11 +76,11 @@ player.addEventListener('play', () => {
       drawParts(ctx, pose);
       pose_ = JSON.stringify(pose, null, '\t');
 
-      p_test.textContent = pose["keypoints"]["position"][0]["x"]
-      /*test_csv = [
+      p_test.textContent = pose["keypoints"][0]["position"]["x"]
+      test_csv = [
         ['x0', 'y0', 'x1', 'y1'],
-        [pose["keypoints"]["position"][0]["x"], pose["keypoints"]["position"][0]["y"], pose["keypoints"]["position"][1]["x"], pose["keypoints"]["position"][1]["y"]]
-      ]*/
+        [pose["keypoints"][0]["position"]["x"], pose["keypoints"][0]["position"]["y"], pose["keypoints"][1]["position"]["x"], pose["keypoints"][1]["position"]["y"]]
+      ]
 
     })
     .catch((e) => {
