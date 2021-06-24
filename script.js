@@ -77,7 +77,8 @@ player.addEventListener('play', () => {
 
       test_csv = [
         ['x0', 'y0', 'x1', 'y1'],
-        [pose["keypoints"]["position"][0]["x"], pose["keypoints"]["position"][0]["y"], pose["keypoints"]["position"][1]["x"], pose["keypoints"]["position"][1]["y"]]
+        //[pose["keypoints"]["position"][0]["x"], pose["keypoints"]["position"][0]["y"], pose["keypoints"]["position"][1]["x"], pose["keypoints"]["position"][1]["y"]]
+        [1, 2, 3, 4]
       ]
     })
     .catch((e) => {
