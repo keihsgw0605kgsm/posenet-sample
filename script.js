@@ -4,7 +4,7 @@ const flipHorizontal = false;
 
 const player = document.getElementById('video');
 const download = document.getElementById('download');
-const p_text = document.getElementById('text')
+const p_text = document.getElementById('text');
 //var detections_json = "No Data";
 const modelUrl = './models';
 var save_arr = [];
