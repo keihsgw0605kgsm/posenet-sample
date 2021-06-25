@@ -1,6 +1,6 @@
 const player = document.getElementById('video')
-//const download = document.getElementById('download')
-//const p_test = document.getElementById('test')
+const download = document.getElementById('download')
+const p_test = document.getElementById('test')
 //const txt = document.getElementById('text')
 //const txt2 = document.getElementById('text2')
 //const posenet = require('@tensorflow-models/posenet')
@@ -76,7 +76,7 @@ player.addEventListener('play', () => {
       drawParts(ctx, pose);
       pose_ = JSON.stringify(pose, null, '\t');
 
-      //p_test.textContent = pose["keypoints"][0]["position"]["x"]
+      p_test.textContent = pose["keypoints"][0]["position"]["x"]
       test_csv = [
         ['x0', 'y0', 'x1', 'y1'],
         [pose["keypoints"][0]["position"]["x"], pose["keypoints"][0]["position"]["y"], pose["keypoints"][1]["position"]["x"], pose["keypoints"][1]["position"]["y"]]
