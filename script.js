@@ -1,38 +1,58 @@
-const player = document.getElementById('video')
-const download = document.getElementById('download')
-const p_test = document.getElementById('test')
-//const txt = document.getElementById('text')
-//const txt2 = document.getElementById('text2')
-//const posenet = require('@tensorflow-models/posenet')
-//import * as posenet from '@tensorflow-models/posenet'
-//const modelUrl = './weights'
-var imageScaleFactor = 0.5;
-var outputStride = 32;
-var flipHorizontal = false;
-var pose_ = "No Data";
-var test_csv = []
+const imageScaleFactor = 0.5;
+const outputStride = 32;
+const flipHorizontal = false;
 
-//const net = posenet.load().then(txt.textContent = "OK").then(startVideo)
+const player = document.getElementById('video');
+const download = document.getElementById('download');
+const p_text = document.getElementById('text')
+//var detections_json = "No Data";
+const modelUrl = './models';
+var save_arr = [];
+let labels = [
+  'UnixTime(ms)',
 
-window.onload = function () {
-  startVideo();
-}
+  'face_score', 'face_boundingBox_x', 'face_boundingBox_y', 'face_boundingBox_width', 'face_boundingBox_height',
+  'face_landmark_x0', 'face_landmark_y0', 'face_landmark_x1', 'face_landmark_y1', 'face_landmark_x2', 'face_landmark_y2', 'face_landmark_x3', 'face_landmark_y3',
+  'face_landmark_x4', 'face_landmark_y4', 'face_landmark_x5', 'face_landmark_y5', 'face_landmark_x6', 'face_landmark_y6', 'face_landmark_x7', 'face_landmark_y7',
+  'face_landmark_x8', 'face_landmark_y8', 'face_landmark_x9', 'face_landmark_y9', 'face_landmark_x10', 'face_landmark_y10', 'face_landmark_x11', 'face_landmark_y11',
+  'face_landmark_x12', 'face_landmark_y12', 'face_landmark_x13', 'face_landmark_y13', 'face_landmark_x14', 'face_landmark_y14', 'face_landmark_x15', 'face_landmark_y15',
+  'face_landmark_x16', 'face_landmark_y16', 'face_landmark_x17', 'face_landmark_y17', 'face_landmark_x18', 'face_landmark_y18', 'face_landmark_x19', 'face_landmark_y19',
+  'face_landmark_x20', 'face_landmark_y20', 'face_landmark_x21', 'face_landmark_y21', 'face_landmark_x22', 'face_landmark_y22', 'face_landmark_x23', 'face_landmark_y23',
+  'face_landmark_x24', 'face_landmark_y24', 'face_landmark_x25', 'face_landmark_y25', 'face_landmark_x26', 'face_landmark_y26', 'face_landmark_x27', 'face_landmark_y27',
+  'face_landmark_x28', 'face_landmark_y28', 'face_landmark_x29', 'face_landmark_y29', 'face_landmark_x30', 'face_landmark_y30', 'face_landmark_x31', 'face_landmark_y31',
+  'face_landmark_x32', 'face_landmark_y32', 'face_landmark_x33', 'face_landmark_y33', 'face_landmark_x34', 'face_landmark_y34', 'face_landmark_x35', 'face_landmark_y35',
+  'face_landmark_x36', 'face_landmark_y36', 'face_landmark_x37', 'face_landmark_y37', 'face_landmark_x38', 'face_landmark_y38', 'face_landmark_x39', 'face_landmark_y39',
+  'face_landmark_x40', 'face_landmark_y40', 'face_landmark_x41', 'face_landmark_y41', 'face_landmark_x42', 'face_landmark_y42', 'face_landmark_x43', 'face_landmark_y43',
+  'face_landmark_x44', 'face_landmark_y44', 'face_landmark_x45', 'face_landmark_y45', 'face_landmark_x46', 'face_landmark_y46', 'face_landmark_x47', 'face_landmark_y47',
+  'face_landmark_x48', 'face_landmark_y48', 'face_landmark_x49', 'face_landmark_y49', 'face_landmark_x50', 'face_landmark_y50', 'face_landmark_x51', 'face_landmark_y51',
+  'face_landmark_x52', 'face_landmark_y52', 'face_landmark_x53', 'face_landmark_y53', 'face_landmark_x54', 'face_landmark_y54', 'face_landmark_x55', 'face_landmark_y55',
+  'face_landmark_x56', 'face_landmark_y56', 'face_landmark_x57', 'face_landmark_y57', 'face_landmark_x58', 'face_landmark_y58', 'face_landmark_x59', 'face_landmark_y59',
+  'face_landmark_x60', 'face_landmark_y60', 'face_landmark_x61', 'face_landmark_y61', 'face_landmark_x62', 'face_landmark_y62', 'face_landmark_x63', 'face_landmark_y63',
+  'face_landmark_x64', 'face_landmark_y64', 'face_landmark_x65', 'face_landmark_y65', 'face_landmark_x66', 'face_landmark_y66', 'face_landmark_x67', 'face_landmark_y67',
 
+  'pose_nose_score', 'pose_nose_x', 'pose_nose_y',
+  'pose_leftEye_score', 'pose_leftEye_x', 'pose_leftEye_y',
+  'pose_rightEye_score', 'pose_rightEye_x', 'pose_rightEye_y',
+  'pose_leftEar_score', 'pose_leftEar_x', 'pose_leftEar_y',
+  'pose_rightEar_score', 'pose_rightEar_x', 'pose_rightEar_y',
+  'pose_leftShoulder_score', 'pose_leftShoulder_x', 'pose_leftShoulder_y',
+  'pose_rightShoulder_score', 'pose_rightShoulder_x', 'pose_rightShoulder_y',
+  'pose_leftElbow_score', 'pose_leftElbow_x', 'pose_leftElbow_y',
+  'pose_rightElbow_score', 'pose_rightElbow_x', 'pose_rightElbow_y',
+  'pose_leftWrist_score', 'pose_leftWrist_x', 'pose_leftWrist_y',
+  'pose_rightWrist_score', 'pose_rightWrist_x', 'pose_rightWrist_y'
+]
 
-/*posenet.load()
-.then((net) => {
-  startVideo();
-  return net
-})
-.then((net) => {
-  return net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
-})
-.then((pose) => {
-  txt.textContent = JSON.stringify(pose)
-})
+/**モデルのロード**/
+Promise.all([
+  faceapi.nets.tinyFaceDetector.loadFromUri(modelUrl),
+  faceapi.nets.faceLandmark68Net.loadFromUri(modelUrl)
+])
 .catch((e) => {
-  txt.textContent = e
-})*/
+  console.log('モデルをロードできません: '+e);
+})
+.then(save_arr.push(labels)) //セーブデータの項目名の追加
+.then(startVideo);
 
 /**カメラを用いたビデオストリーミング**/
 function startVideo() {
@@ -43,7 +63,6 @@ function startVideo() {
       height: player.height
     }
   };
-  
   navigator.mediaDevices.getUserMedia(constraints)
   .then(function(stream) {
     player.srcObject = stream;
@@ -54,171 +73,85 @@ function startVideo() {
   .catch(function(err) {
     console.log(err.name+": "+err.message);
   });
-}
+};
 
 /**カメラオン時のイベント**/
 player.addEventListener('play', () => {
-  const canvas = document.createElement("canvas");
-  canvas.width = player.width;
-  canvas.height = player.height;
-  document.body.append(canvas);
-  
   setInterval(async () => {
-    const ctx = canvas.getContext('2d');
-    //ctx.drawImage(player, 0, 0);
-    
-    posenet.load()
+    // face-api
+    const detections = await faceapi.detectAllFaces(player, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks();
+    // posenet
+    /*posenet.load()
     .then((net) => {
-      return net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
-    })
-    .then((pose) => {
-      console.log(JSON.stringify(pose))
-      drawParts(ctx, pose);
-      pose_ = JSON.stringify(pose, null, '\t');
-
-      p_test.textContent = pose["keypoints"][0]["position"]["x"]
-      test_csv = [
-        ['x0', 'y0', 'x1', 'y1'],
-        [pose["keypoints"][0]["position"]["x"], pose["keypoints"][0]["position"]["y"], pose["keypoints"][1]["position"]["x"], pose["keypoints"][1]["position"]["y"]]
-      ]
-
+      const pose =  net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
     })
     .catch((e) => {
       consoloe.log(e)
-    })
-
-    //const pose = await net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
-    /*net.estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
-    then((pose) => {
-      txt.textContent = "pose2"
-    })
-    .catch((e) => {txt.textContent = e})*/
-    //txt.textContent = "pose"//JSON.stringify(pose)
+    })*/
+    const pose = posenet.load().estimateSinglePose(player, imageScaleFactor, flipHorizontal, outputStride)
+    p_text.textContent = pose['keypoints'][0]['position']['x']
     
-    //drawParts(ctx, pose);
+    //save_arr.push(createSaveData(detections[0], pose));
+    save_arr.push(createSaveData(detections[0]));
 
-    //結果の出力
-    //console.log(JSON.stringify(pose));
-  }, 100)
+  }, 1000)
   .catch((e) => {
     console.log('setIntervalでエラー：'+e);
-  })
+  });
 })
 .catch((e) => {
   console.log('player.addEventListenerでエラー：'+e);
-})
+});
 
-/*function drawPoint(y,x,r) {
-  ctx.beginPath();
-  ctx.arc(x,y,r,0,2*Math.PI);
-  ctx.fillStyle = "#FFFFFF";
-  ctx.fill();
-}
-
-function drawKeypoints(keypoints) {
-  for (let i = 0; i < keypoints.length; i++) {
-    const keypoint = keypoints[i];
-    console.log(`keypoint in drawkeypoints ${keypoint}`);
-    const { y, x } = keypoint.position;
-    drawPoint(y, x, 3);
-  }
-}
-
-function drawSegment(
-  pair1,
-  pair2,
-  color,
-  scale
-) {
-  ctx.beginPath();
-  ctx.moveTo(pair1.x * scale, pair1.y * scale);
-  ctx.lineTo(pair2.x * scale, pair2.y * scale);
-  ctx.lineWidth = 2;
-  ctx.strokeStyle = color;
-  ctx.stroke();
-}
-
-function drawSkeleton(keypoints) {
-  const color = "#FFFFFF";
-  const adjacentKeyPoints = posenet.getAdjacentKeyPoints(
-    keypoints,
-    minConfidence
-  );
-
-  adjacentKeyPoints.forEach((keypoint) => {
-    drawSegment(
-      keypoint[0].position,
-      keypoint[1].position,
-      color,
-      1,
-    );
-  });
-}*/
-
-function drawParts(ctx, pose) {
-  ctx.clearRect(0, 0, ctx.canvas.clientWidth, ctx.canvas.clientHeight);
-  const points = pose.keypoints;
-  const radius = 7; //円の半径
-
-  for (let i = 0; i < points.length; i++) {
-    const xpos = points[i].position.x; //x位置
-    const ypos = points[i].position.y; //y位置
-    const part = points[i].part; //部位の名前
-
-    //円の色
-    ctx.fillStyle = "red";
-    //円で塗る
-    ctx.beginPath();
-    ctx.arc(xpos, ypos, radius, 0, Math.PI*2);
-    ctx.fill();
-  }
-
-  //上半身，左右別に部位を線で結ぶ
-  ctx.beginPath();
-  ctx.strokeStyle = "red";
-  ctx.lineWidth = 4;
-  //leftsholder5 - leftsholder7 - leftsholder9
-  ctx.moveTo(points[5].position.x, points[5].position.y);
-  ctx.lineTo(points[7].position.x, points[7].position.y);
-  ctx.lineTo(points[9].position.x, points[9].position.y);
-  //rightsholder6 - rightsholder8 - rightsholder10
-  ctx.moveTo(points[6].position.x, points[6].position.y);
-  ctx.lineTo(points[8].position.x, points[8].position.y);
-  ctx.lineTo(points[10].position.x, points[10].position.y);
-  //線を描く
-  ctx.stroke();
-
-  // 下半身、左右別に部位を線で結ぶ
-  /*ctx.beginPath();
-  ctx.strokeStyle = 'blue';
-  // leftHip11 - leftKnee13 - leftAnkle15
-  ctx.moveTo(points[11].position.x, points[11].position.y);
-  ctx.lineTo(points[13].position.x, points[13].position.y);
-  ctx.lineTo(points[15].position.x, points[15].position.y);
-  // rightHip12 - rightKnee14 - rightAnkle16
-  ctx.moveTo(points[12].position.x, points[12].position.y);
-  ctx.lineTo(points[14].position.x, points[14].position.y);
-  ctx.lineTo(points[16].position.x, points[16].position.y);
-  ctx.stroke();*/
-}
-
-/** jsonファイルの保存 **/
+/** jsonファイルのダウンロード **/
 /*function handleDownload() {
-  var blob = new Blob([ pose_ ], { "type" : "text/plain" });
+  var blob = new Blob([ detections_json ], { "type" : "text/plain" });
   var url = window.URL.createObjectURL(blob);
   download.href = url;
-  window.navigator.msSaveBlob(blob, "test_posenet.json"); 
+  window.navigator.msSaveBlob(blob, "test.json"); 
 }*/
 
-/** csvファイルの保存 **/
-function handleDownload() {
-  
-  let data = test_csv.map((record)=>record.join(',')).join('\r\n');
-  
+/** csvファイルのダウンロード **/
+function handleDownload() { 
+  let data = save_arr.map((arr)=>arr.join(',')).join('\r\n');
   var bom = new Uint8Array([0xEF, 0xBB, 0xBF])
-
   var blob = new Blob([ bom, data ], { "type" : "text/csv" });
   let url = (window.URL || window.webkitURL).createObjectURL(blob);
   download.href = url;
-  window.navigator.msSaveBlob(blob, "test_posenet.csv");
+  window.navigator.msSaveBlob(blob, "test.csv");
+}
+
+/** 保存データの作成 **/
+// 入力：顔認識のjson
+// 出力：その時刻の一次元配列
+function createSaveData(detections) {
+  var arr = []
+
+  // UnixTime(ms)
+  var date = new Date();
+  arr.push(date.getTime())
+
+  // face-apiのscore
+  arr.push(detections['detection']['_score'])
+
+  // face-apiのバウンディングボックス情報
+  arr.push(detections['detection']['_box']['_x'])
+  arr.push(detections['detection']['_box']['_y'])
+  arr.push(detections['detection']['_box']['_width'])
+  arr.push(detections['detection']['_box']['_height'])
+
+  // face-apiの顔特徴点68点
+  for(let i = 0; i < 68; i++) {
+    arr.push(detections['landmarks']['_positions'][i]['_x'])
+    arr.push(detections['landmarks']['_positions'][i]['_y'])
+  }
+
+  // nose(0), eye(1,2), ear(3,4), shoulder(5,6), elbow(7,8), wrist(9,10)の情報
+  /*for(let i = 0; i < 11; i++) {
+    arr.push(pose['keypoints'][i]['score'])
+    arr.push(pose['keypoints'][i]['position']['x'])
+    arr.push(pose['keypoints'][i]['position']['y'])
+  }*/
+
+  return arr;
 }
