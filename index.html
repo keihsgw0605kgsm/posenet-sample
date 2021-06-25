@@ -22,15 +22,17 @@
   </style>
 </head>
 <body>
-  <a id="download" href="#" download="test.csv" onclick="handleDownload()">ダウンロード</a>
-  <video id="video" width="720" height="560" autoplay muted></video><br>
-  <p id="text">test</p>
-  
+  <a id="download" href="#" download="test_posenet.csv" onclick="handleDownload()">ダウンロード</a>
+  <video id="video" width="980" height="540" autoplay muted></video><br>
+  <p id="test">test</p>
 
   <!--外部JSファイル読み込み-->
-  <!--<script src="https://unpkg.com/@tensorflow/tfjs"></script>
-  <script src="https://unpkg.com/@tensorflow-models/posenet"></script>-->
-  <script defer src="./api/face-api.min.js"></script>
+  <script src="https://unpkg.com/@tensorflow/tfjs"></script>
+  <script src="https://unpkg.com/@tensorflow-models/posenet"></script>
+  <!--<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet"></script>-->
+  <!--<script defer src="./@tensorflow-models/posenet"></script>-->
+  <!--<script defer src="./posenet.min.js"></script>-->
   <script defer src="./script.js"></script>
 </body>
 </html>
